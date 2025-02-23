@@ -1,0 +1,12 @@
+Day 3 - MERN Stack
+
+- package.json file 
+- Understanding of Npm(Node Pakage Manager): that holds and stores packages
+- Laravel(framework)
+- What is th framework of Node.js ? - It's Express and its in npm
+- how is Express versioning ? - semantic versioning (semVer)
+4.21.2 (major.minor.patch)
+
+- Port Numbers: 0-65535 numbers of port in a system
+- Internal Ports
+- 
