@@ -9,4 +9,7 @@ Day 3 - MERN Stack
 
 - Port Numbers: 0-65535 numbers of port in a system
 - Internal Ports
-- 
+
+
+nodemon
+
