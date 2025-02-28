@@ -54,10 +54,20 @@ app.get("/book",async (req,res)=>{
 app.get("/book/:id",async(req,res)=>{ 
     const id=req.params.id
     const book = await Book.findById(id) //returns object
-    console.log(book)
-    res.json({
-        message : "Single Book Fetched Succcessfully"
-    })
+    if(!book){
+        res.status(400).json({
+            message : "Nothing Found"
+        })
+    }else{
+        res.status(200).json({
+            message : "Single Book Fetched Succcessfully",
+            data:book
+          
+
+        })
+    }
+    
+
 })
 
 app.listen(3000, ()=>{
