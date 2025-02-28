@@ -13,3 +13,8 @@ Day 3 - MERN Stack
 
 nodemon
 
+app.use(express.json())
+app.use(express.urlencoded({extended : true}))
+
+//difference between /id and /:id is you can put any numbers in /:id but you cannot put any numbers in /id
+

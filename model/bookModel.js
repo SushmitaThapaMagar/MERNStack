@@ -1,8 +1,6 @@
 const mongoose=require("mongoose")
-
 const Schema=mongoose.Schema
-
-const blogSchema =new Schema({
+const bookSchema =new Schema({
     bookName :{
         type:String,
         unique:true
@@ -19,6 +17,9 @@ const blogSchema =new Schema({
     publishedAt:{
         type:String
     },
+    publication:{
+        type:String
+    }
 
 })
 
