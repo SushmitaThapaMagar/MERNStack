@@ -19,8 +19,8 @@ app.get("/",(req,res)=>{
     res.status(200).json({
         message : "Success"
     })
-})
-    
+} )
+    //create book
     app.post("/book",async(req,res)=>{ //async and await is like two wheel 
 
         const {bookName,bookPrice,isbnNumber,authorName,publishedAt,publication}=req.body
