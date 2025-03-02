@@ -70,6 +70,47 @@ app.get("/book/:id",async(req,res)=>{
 
 })
 
+//delete operation
+app.delete("/book/:id",async(req,res)=>{
+    const id=req.params.id
+    await Book.findByIdAndDelete(id)
+    res.status(200).json({
+        message : "Book Deleted Succcessfully",
+    })
+
+
+
+})
+
+//update operation
+app.patch("/book/:id",async(req,res)=>{
+
+    const id=req.params.id //which book to update
+    const{bookName,bookPrice,isbnNumber,authorName,publishedAt,publication}=req.body
+    await Book.findByIdAndUpdate(id,{
+        bookName:bookName,
+        bookPrice:bookPrice,
+        authorName:authorName,
+        publication:publication,
+        publishedAt:publishedAt,
+        isbnNumber:isbnNumber
+
+    })
+    res.status(200).json({
+        message:"Updated Successfully!"
+    })
+
+})
+
+
 app.listen(3000, ()=>{
     console.log("Node.js server has started at port 3000")
 })
+
+
+
+
+
+
+
+
