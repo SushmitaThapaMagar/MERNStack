@@ -67,7 +67,6 @@ app.get("/book/:id",async(req,res)=>{
         })
     }
     
-
 })
 
 //delete operation
@@ -77,8 +76,6 @@ app.delete("/book/:id",async(req,res)=>{
     res.status(200).json({
         message : "Book Deleted Succcessfully",
     })
-
-
 
 })
 
