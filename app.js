@@ -5,6 +5,9 @@ const connectToDatabase=require('./database')
 const Book = require('./model/bookModel')
 
 // const ConnectionString ="mongodb+srv://sushmitachan44:12345@cluster0.kquvw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+//multerconfig imports
+const {multer,storage} = require("./middleware/multerConfig")
+const upload = multer({storage : storage})
 
 //Alternative
 // const app = require('express')()
@@ -21,7 +24,7 @@ app.get("/",(req,res)=>{
     })
 } )
     //create book
-    app.post("/book",async(req,res)=>{ //async and await is like two wheel 
+    app.post("/book",upload.single("image"),async(req,res)=>{ //async and await is like two wheel 
 
         const {bookName,bookPrice,isbnNumber,authorName,publishedAt,publication}=req.body
         await Book.create({ //await takes time to display
@@ -98,7 +101,6 @@ app.patch("/book/:id",async(req,res)=>{
     })
 
 })
-
 
 app.listen(3000, ()=>{
     console.log("Node.js server has started at port 3000")
