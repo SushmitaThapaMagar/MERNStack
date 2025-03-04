@@ -1,5 +1,6 @@
 const express = require('express') //const : cannot edit later
 const app = express()
+const fs=require('fs')
 // const mongoose =require('mongoose')
 const connectToDatabase=require('./database')
 const Book = require('./model/bookModel')
@@ -25,7 +26,15 @@ app.get("/",(req,res)=>{
 } )
     //create book
     app.post("/book",upload.single("image"),async(req,res)=>{ //async and await is like two wheel 
+        console.log(req.file)
+        let fileName;
+        if(!req.file){
+            fileName="https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg"
 
+        }
+        else{
+            fileName="http://localhost:3000/" + req.file.filename
+        }
         const {bookName,bookPrice,isbnNumber,authorName,publishedAt,publication}=req.body
         await Book.create({ //await takes time to display
            bookName, //it can be write as bookName : bookName,
@@ -33,7 +42,8 @@ app.get("/",(req,res)=>{
            isbnNumber,
            authorName,
            publishedAt,
-           publication
+           publication,
+           imageUrl : fileName
 
         })
         res.status(201).json({ //201 is created
@@ -83,24 +93,47 @@ app.delete("/book/:id",async(req,res)=>{
 })
 
 //update operation
-app.patch("/book/:id",async(req,res)=>{
-
+app.patch("/book/:id",upload.single('image'), async(req,res)=>{
     const id=req.params.id //which book to update
     const{bookName,bookPrice,isbnNumber,authorName,publishedAt,publication}=req.body
+    const oldDatas=await Book.findById(id)
+    let fileName;
+    if(req.file){
+
+        const oldImagePath = oldDatas.imageUrl
+        console.log(oldImagePath)
+        const localHostUrlLength="http://localhost:3000/".length
+        const newOldImagePath = oldImagePath.slice
+        (localHostUrlLength)
+        console.log(newOldImagePath)
+        fs.unlink(`storage/${newOldImagePath}`,(err)=>{ //unlink:to remove something from file
+
+            if(err){ 
+                console.log(err)
+            }
+            else{
+                console.log("File Deleted Succesfully")
+            }
+        }) 
+        fileName = "http://localhost:3000/" + req.file.filename
+    }
+    
     await Book.findByIdAndUpdate(id,{
         bookName:bookName,
         bookPrice:bookPrice,
         authorName:authorName,
         publication:publication,
         publishedAt:publishedAt,
-        isbnNumber:isbnNumber
+        isbnNumber:isbnNumber,
+        imageUrl : fileName
 
     })
     res.status(200).json({
-        message:"Updated Successfully!"
+        message:"Book Updated Successfully!"
     })
 
 })
+app.use(express.static("./storage/")) //to give access to any folder or any pictures
 
 app.listen(3000, ()=>{
     console.log("Node.js server has started at port 3000")
