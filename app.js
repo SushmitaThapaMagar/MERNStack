@@ -16,7 +16,7 @@ const upload = multer({storage : storage})
 //cors package
 const cors = require('cors')
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: '*'
 }))
 
 
